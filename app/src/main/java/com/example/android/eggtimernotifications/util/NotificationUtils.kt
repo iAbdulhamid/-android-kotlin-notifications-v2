@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import com.example.android.eggtimernotifications.MainActivity
 import com.example.android.eggtimernotifications.R
@@ -28,6 +29,16 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
+    // 12. add notification style -> an image
+    val eggImage = BitmapFactory.decodeResource(
+        applicationContext.resources,
+        R.drawable.cooked_egg
+    )
+    val bigPicStyle = NotificationCompat.BigPictureStyle()
+        .bigPicture(eggImage)
+        .bigLargeIcon(null)
+
+
     // 1. get an instance of NotificationCompat.Builder
     val builder = NotificationCompat.Builder(
         applicationContext,
@@ -39,6 +50,9 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         // 9. set content intent: when the user taps on the notification, the notification dismisses itself as it takes you to the app.
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
+        // 13. set notification style
+        .setStyle(bigPicStyle)
+        .setLargeIcon(eggImage)
 
     // 3. call notify() to deliver the notification
     notify(NOTIFICATION_ID, builder.build())
