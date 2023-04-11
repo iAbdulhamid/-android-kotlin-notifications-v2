@@ -3,6 +3,7 @@ package com.example.android.eggtimernotifications
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 
 // 19.
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -21,7 +22,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Instance ID token to your app server.
         sendRegistrationToServer(token)
     }
+
     // [START on_new_token]
+    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+        Log.d(TAG, "From: ${remoteMessage?.from}")
+        remoteMessage?.data?.let {
+            Log.d(TAG, "Message data payload: " + remoteMessage.data)
+        }
+    }
 
     private fun sendRegistrationToServer(token: String?) {
 
